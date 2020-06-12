@@ -4,7 +4,7 @@ with open("README.md", 'r') as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="process-communication-pkg",
+    name="process-communication",
     version="0.0.1",
     author="Ruben Natvik",
     author_email="ronatvik@gmail.com",
@@ -12,7 +12,7 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/RNatvik/process_communication",
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude=('examples',)),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
