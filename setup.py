@@ -11,12 +11,12 @@ setuptools.setup(
     description="A framework for communication across separate python processes",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://github.com/RNatvik/process_communication",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.8',
 )
