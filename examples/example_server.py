@@ -1,9 +1,9 @@
 from threading import Thread
 
-import master
+import proccom
 
 
-def break_cmd(server: master.Server):
+def break_cmd(server: proccom.Server):
     stop = False
     while not stop:
         a = input()
@@ -13,7 +13,7 @@ def break_cmd(server: master.Server):
 
 
 def main():
-    server = master.Server('127.0.0.1', 5000)  # Create server object
+    server = proccom.Server('127.0.0.1', 5000)  # Create server object
     break_thread = Thread(target=break_cmd, daemon=False, args=[server])
     break_thread.start()
     server.start()  # Start server

@@ -1,6 +1,7 @@
-import client
+import proccom
 from threading import Thread
 import time
+
 
 def break_cmd():
     stop = False
@@ -17,7 +18,7 @@ def handler(msg):
 def main():
     break_thread = Thread(target=break_cmd, daemon=False)
     break_thread.start()
-    subscriber = client.Subscriber({'test_topic': handler}, 'test_subscriber')
+    subscriber = proccom.Subscriber({'test_topic': handler}, 'test_subscriber')
     subscriber.connect()
     stop = False
     while not stop:

@@ -1,4 +1,4 @@
-import client
+import proccom
 from threading import Thread
 import time
 
@@ -14,7 +14,7 @@ def break_cmd():
 def main():
     break_thread = Thread(target=break_cmd, daemon=False)
     break_thread.start()
-    publisher = client.Publisher('test_topic', 'test_publisher', client.msgs.format_test)
+    publisher = proccom.Publisher('test_topic', 'test_publisher', proccom.msgs.format_test)
     publisher.connect()
     stop = False
     while not stop:

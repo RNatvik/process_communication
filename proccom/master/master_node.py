@@ -1,4 +1,4 @@
-from master.server_util import PublisherSocket, SubscriberSocket
+from proccom.master.server_util import PublisherSocket, SubscriberSocket
 from threading import Thread, Lock, Event
 import json
 import socket
