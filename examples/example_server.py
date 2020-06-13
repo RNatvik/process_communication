@@ -1,13 +1,12 @@
 from threading import Thread
-
 import proccom
 
 
 def break_cmd(server: proccom.Server):
     stop = False
     while not stop:
-        a = input()
-        if a == 'q':
+        a = input('Server is running, enter "quit" to stop the server\n')
+        if a == 'quit':
             stop = True
     server.stop()
 
