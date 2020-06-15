@@ -83,6 +83,8 @@ class PublisherSocket:
                 except ConnectionResetError as e:
                     print(self, ':: Connection was forcibly closed by remote')
                     self.shutdown = True
+                except json.JSONDecodeError:
+                    print(f'{self} :: Exception caught when attempting to load the following as JSON:\n{data}')
         self.event_flag.set()
 
     def _forward_msg(self, json_obj):
