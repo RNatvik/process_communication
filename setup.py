@@ -5,7 +5,7 @@ with open("README.md", 'r') as fh:
 
 setuptools.setup(
     name="process-communication",
-    version="0.0.2",
+    version="0.0.3",
     author="Ruben Natvik",
     author_email="ronatvik@gmail.com",
     description="A framework for communication across separate python processes",
