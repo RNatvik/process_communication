@@ -125,11 +125,12 @@ class Subscriber:
         while self.connected and not self.shutdown:
             try:
                 data = self.soc.recv(1024)
-                jdata = json.loads(data.decode('utf-8'))
-                topic = jdata['topic']
-                func = self.handler[topic]
-                handler_thread = Thread(target=func, args=[jdata])
-                handler_thread.start()
+                data_list = self._check_for_multiple(data)
+                for item in data_list:
+                    jdata = json.loads(item.decode('utf-8'))
+                    func = self.handler[jdata['topic']]
+                    handler_thread = Thread(target=func, args=[jdata])
+                    handler_thread.start()
             except socket.timeout:
                 pass
             except ConnectionResetError:
@@ -137,3 +138,18 @@ class Subscriber:
                 self.shutdown = True
         self.soc.close()
         self.connected = False
+
+    def _check_for_multiple(self, input_data: bytes):
+        """
+        Check received data for multiple JSON objects / messages and separate them into a list.
+
+        :param input_data: the received data as bytes
+        :return: list of individual messages
+        """
+        separated_data = input_data.split(b'}{')
+        n = len(separated_data)
+        if n > 1:
+            for i in range(1, n):
+                separated_data[i - 1] = separated_data[i - 1] + b'}'
+                separated_data[i] = b'{' + separated_data[i]
+        return separated_data

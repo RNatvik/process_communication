@@ -76,8 +76,10 @@ class PublisherSocket:
                     if not data:
                         self.shutdown = True
                         break
-                    jdata = json.loads(data)
-                    self._forward_msg(jdata)
+                    data_list = self._check_for_multiple(data)
+                    for item in data_list:
+                        jdata = json.loads(item)
+                        self._forward_msg(jdata)
                 except socket.timeout as e:
                     pass
                 except ConnectionResetError as e:
@@ -86,6 +88,21 @@ class PublisherSocket:
                 except json.JSONDecodeError:
                     print(f'{self} :: Exception caught when attempting to load the following as JSON:\n{data}')
         self.event_flag.set()
+
+    def _check_for_multiple(self, input_data: bytes):
+        """
+        Check received data for multiple JSON objects / messages and separate them into a list.
+
+        :param input_data: the received data as bytes
+        :return: list of individual messages
+        """
+        separated_data = input_data.split(b'}{')
+        n = len(separated_data)
+        if n > 1:
+            for i in range(1, n):
+                separated_data[i - 1] = separated_data[i - 1] + b'}'
+                separated_data[i] = b'{' + separated_data[i]
+        return separated_data
 
     def _forward_msg(self, json_obj):
         """
