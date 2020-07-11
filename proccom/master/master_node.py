@@ -180,8 +180,9 @@ class Server:
                     identity, variant = thread.getName().split('::')
                     if 'publisher' in variant:
                         for key in self.publishers.keys():
-                            if self.publishers[key].id == identity:
-                                self.publishers[key] = None
+                            if self.publishers[key] is not None:
+                                if self.publishers[key].id == identity:
+                                    self.publishers[key] = None
                     elif 'subscriber' in variant:
                         dead_subscriber = None
                         for key in self.subscribers.keys():
